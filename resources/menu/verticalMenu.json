@@ -1,0 +1,22 @@
+{
+    "menu": [
+        {
+            "url": "/admin",
+            "name": "Dashboard",
+            "icon": "menu-icon tf-icons ti ti-smart-home",
+            "slug": "dashboard-analytics"
+        },
+        {
+            "url": "admin/admin-management",
+            "name": "Admin Management",
+            "icon": "menu-icon tf-icons ti ti-typography",
+            "slug": "admin-management"
+        },
+        {
+            "name": "App Settings",
+            "icon": "menu-icon tf-icons ti ti-settings",
+            "slug": "app-settings",
+            "url": "admin/settings"
+        }
+    ]
+}
