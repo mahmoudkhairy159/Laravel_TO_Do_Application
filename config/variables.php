@@ -3,7 +3,7 @@
 return [
     "creatorName" => "Pixinvent",
     "creatorUrl" => "https://pixinvent.com",
-    "templateName" => "Envirdian",
+    "templateName" => "ToDo",
     "templateSuffix" => "Administrator",
     "templateVersion" => "1.0.0",
     "templateFree" => false,

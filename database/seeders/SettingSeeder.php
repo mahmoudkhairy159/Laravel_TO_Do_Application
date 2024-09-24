@@ -15,19 +15,19 @@ class SettingSeeder extends Seeder
     {
         $data = [
             'en' => [
-                'title' => 'Envirdian',
-                'slogan' => 'Envirdian',
-                'summary' => 'Envirdian',
+                'title' => 'ToDo',
+                'slogan' => 'ToDo',
+                'summary' => 'ToDo',
             ],
             'sv' => [
-                'title' => 'Envirdian',
-                'slogan' => 'Envirdian',
-                'summary' => 'Envirdian',
+                'title' => 'ToDo',
+                'slogan' => 'ToDo',
+                'summary' => 'ToDo',
             ],
             'ar' => [
-                'title' => 'Envirdian',
-                'slogan' => 'Envirdian',
-                'summary' => 'Envirdian',
+                'title' => 'ToDo',
+                'slogan' => 'ToDo',
+                'summary' => 'ToDo',
             ],
         ];
 

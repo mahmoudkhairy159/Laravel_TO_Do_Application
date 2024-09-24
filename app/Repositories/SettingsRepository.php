@@ -27,10 +27,10 @@ class   SettingsRepository extends Repository
     public function create(array $data)
     {
         if (request()->hasFile('logo')) {
-            $data['logo'] = $this->uploadImage(request()->file('logo'), 'admins');
+            $data['logo'] = $this->uploadImage(request()->file('logo'), 'users');
         }
         if (request()->hasFile('logo_light')) {
-            $data['logo_light'] = $this->uploadImage(request()->file('logo_light'), 'admins');
+            $data['logo_light'] = $this->uploadImage(request()->file('logo_light'), 'users');
         }
         return   $this->model->create($data);
     }

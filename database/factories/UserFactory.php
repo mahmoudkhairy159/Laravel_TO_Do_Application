@@ -22,8 +22,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
+            'name' => 'user',
+            'email' => 'user@gmail.com',
             'email_verified_at' => now(),
             'phone'=>'01117507344',
             'job_title'=>'Backend Developer',
@@ -35,7 +35,7 @@ class UserFactory extends Factory
     {
 
         return $this->afterCreating(function ($user) {
-            $user->addRole('admin');
+            $user->addRole('user');
         });
     }
 

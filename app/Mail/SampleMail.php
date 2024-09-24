@@ -21,6 +21,6 @@ class SampleMail extends Mailable
 
     public function build()
     {
-        return $this->subject($this->subject)->view('admin.mails.sample');
+        return $this->subject($this->subject)->view('user.mails.sample');
     }
 }

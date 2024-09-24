@@ -22,10 +22,10 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if (Route::is('admin.*')) {
-                    return redirect()->route('admin.dashboard');
+                if (Route::is('website.*')) {
+                    return redirect()->route('website.dashboard');
                 }
-                return redirect(RouteServiceProvider::ADMIN_DASHBOARD);
+                return redirect(RouteServiceProvider::WEBSITE_DASHBOARD);
 
             }
         }
