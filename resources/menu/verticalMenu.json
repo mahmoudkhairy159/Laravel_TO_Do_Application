@@ -7,16 +7,11 @@
             "slug": "dashboard-analytics"
         },
         {
-            "url": "user/user-management",
-            "name": "Admin Management",
+            "url": "user/tasks",
+            "name": "Tasks Management",
             "icon": "menu-icon tf-icons ti ti-typography",
-            "slug": "user-management"
-        },
-        {
-            "name": "App Settings",
-            "icon": "menu-icon tf-icons ti ti-settings",
-            "slug": "app-settings",
-            "url": "user/settings"
+            "slug": "tasks-management"
         }
+
     ]
 }

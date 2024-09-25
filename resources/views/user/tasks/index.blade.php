@@ -60,7 +60,7 @@
                             <th>Due Date</th>
                             <th>Priority</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th >Actions</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -82,16 +82,19 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="btn-group text-center">
-                                    <div class="row justify-content-center align-content-center m-2">
-                                        <div class="col-5">
-                                            <a href="{{ route('user.tasks.edit', $item->id) }}" class="btn"><i class="ti ti-edit ti-sm"></i></a>
+                                <td class="btn-group text-start">
+                                    <div class="row justify-content-start align-content-center ">
+                                        <div class="col-3">
+                                            <a href="{{route('user.tasks.show', $item->id) }}"  class="btn"><i class="ti ti-eye ti-sm me-1"></i></a>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-3">
+                                            <a href="{{ route('user.tasks.edit', $item->id) }}" class="btn"><i class="ti ti-edit ti-sm me-1"></i></a>
+                                        </div>
+                                        <div class="col-3">
                                             <form action="{{ route('user.tasks.destroy', $item->id) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn"><i class="ti ti-trash ti-sm"></i></button>
+                                                <button type="submit" class="btn"><i class="ti ti-trash ti-sm "></i></button>
                                             </form>
                                         </div>
                                     </div>

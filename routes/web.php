@@ -75,13 +75,14 @@ Route::prefix('user')->name('user.')->group(function () {
                 'view' => 'user.tasks.index',
             ])->name('index');
 
-            Route::get('/{id}}', 'show')->defaults('_config', [
-                'view' => 'user.tasks.show',
-            ])->name('show');
-
             Route::get('/create', 'create')->defaults('_config', [
                 'view' => 'user.tasks.create',
             ])->name('create');
+
+            Route::get('/{id}', 'show')->defaults('_config', [
+                'view' => 'user.tasks.show',
+            ])->name('show');
+
 
             Route::get('/{id}/edit', 'edit')->defaults('_config', [
                 'view' => 'user.tasks.edit',
