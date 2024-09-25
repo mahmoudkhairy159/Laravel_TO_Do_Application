@@ -3,28 +3,27 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
-use App\Http\Requests\Website\User\StoreUserRequest;
-use App\Http\Requests\Website\User\UpdateUserRequest;
+use App\Http\Requests\Website\Category\StoreCategoryRequest;
+use App\Http\Requests\Website\Category\UpdateCategoryRequest;
+use App\Http\Requests\Website\Category\UpdateCategoryStatusRequest;
+use App\Repositories\CategoryRepository;
 
-class UserController extends Controller
+class CategoryController extends Controller
 {
 
     protected $_config;
-    protected $UserRepository;
+    protected $categoryRepository;
 
-    public function __construct(UserRepository $UserRepository)
+    public function __construct(CategoryRepository $categoryRepository)
     {
         $this->_config = request('_config');
-        $this->UserRepository = $UserRepository;
+        $this->categoryRepository = $categoryRepository;
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function getByUserId($userId)
     {
-        $items = $this->UserRepository->paginated();
+        $items = $this->categoryRepository->getByUserId($userId)->paginate();
         return view($this->_config['view'], compact('items'));
     }
 
@@ -39,27 +38,27 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
-        // dd($request->all());
+
         $data = $request->validated();
-        $created =  $this->UserRepository->create($data);
+        $created =  $this->categoryRepository->create($data);
 
         if (!$created) {
             $request->session()->put('error', 'Something Went Wrong');
             return redirect()->back();
         }
-        $request->session()->put('success', 'User Created SuccessFully');
+        $request->session()->put('success', 'Category Created SuccessFully');
         return redirect()->route($this->_config['redirect']);
     }
 
     /**
      * Display the specified resource.
      */
-    public function showProfile()
+    public function show($id)
     {
-        $id=auth()->id();
-        $item = $this->UserRepository->find($id);
+        $userId = auth()->id();
+        $item = $this->categoryRepository->getByUserId($userId)->find($id);
         if (!$item) {
             return abort(404);
         }
@@ -71,7 +70,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $item = $this->UserRepository->find($id);
+        $userId = auth()->id();
+        $item = $this->categoryRepository->getByUserId($userId)->find($id);
         if (!$item) {
             return abort(404);
         }
@@ -81,38 +81,42 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
-        $item = $this->UserRepository->find($id);
+        $userId = auth()->id();
+        $item = $this->categoryRepository->getByUserId($userId)->find($id);
         if (!$item) {
             return abort(404);
         }
         $data = $request->validated();
 
-        $updated =  $this->UserRepository->update($data, $id);
+        $updated =  $this->categoryRepository->update($data, $id);
         if (!$updated) {
             $request->session()->put('error', 'Something Went Wrong');
             return redirect()->back();
         }
-        $request->session()->put('success', 'User Updated SuccessFully');
+        $request->session()->put('success', 'Category Updated SuccessFully');
         return redirect()->route($this->_config['redirect']);
     }
+
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $item = $this->UserRepository->find($id);
+        $userId = auth()->id();
+        $item = $this->categoryRepository->getByUserId($userId)->find($id);
         if (!$item) {
             return abort(404);
         }
-        $deleted =  $this->UserRepository->delete($id);
+        $deleted =  $this->categoryRepository->delete($id);
         if (!$deleted) {
             request()->session()->put('error', 'Something Went Wrong');
             return redirect()->back();
         }
-        request()->session()->put('success', 'User Deleted SuccessFully');
+        request()->session()->put('success', 'Category Deleted SuccessFully');
         return redirect()->route($this->_config['redirect']);
     }
 }

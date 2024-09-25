@@ -8,28 +8,28 @@ use App\Traits\UploadFileTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements LaratrustUser
+class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRolesAndPermissions, UploadFileTrait;
+    use HasApiTokens, HasFactory, Notifiable, UploadFileTrait;
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    const FILES_DIRECTORY = 'users';
     protected $guarded = [];
     protected $appends = ['image_url'];
-//status
+    //status
+
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
-//status
+    //status
     protected function getImageUrlAttribute()
     {
-        return $this->image ? $this->getFileAttribute($this->image) : asset('assets/admin/img/avatars/default.png');
-
+        return $this->image ? $this->getFileAttribute($this->image) : null;
     }
 
     /**

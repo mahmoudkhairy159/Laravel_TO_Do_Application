@@ -16,7 +16,7 @@ use App\Http\Controllers\Website\DashboardController;
 |
  */
 
- Route::get('/', [AuthController::class, 'login'])->defaults('_config', [
+Route::get('/', [AuthController::class, 'login'])->defaults('_config', [
     'view' => 'user.auth.login',
 ])->name(name: 'index');
 
@@ -31,8 +31,16 @@ Route::prefix('user')->name('user.')->group(function () {
             ])->name('login');
             Route::post('/login/checkLogin', 'checkLogin')->name('check_login');
         });
+    // register
+    Route::controller(AuthController::class)
+        ->middleware('guest')
+        ->group(function () {
+            Route::get('/register', 'register')->defaults('_config', [
+                'view' => 'user.auth.register',
+            ])->name('register');
+            Route::post('/login/checkRegister', 'checkRegister')->name('check_register');
+        });
 
-    // Admin Routes
     Route::group(['middleware' => ['auth', 'role:user']], function () {
 
         // Dashboard
@@ -41,67 +49,29 @@ Route::prefix('user')->name('user.')->group(function () {
                 'view' => 'user.dashboard.dashboard',
             ])->name('dashboard');
 
-        // Logout
-        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+        Route::controller(AuthController::class)->group(function () {
+            // Logout
+            Route::post('/logout', 'logout')->name('logout');
 
-        // Admin Management
-        Route::controller(UserController::class)->name('user-management.')->prefix('user-management')->group(function () {
-            Route::get('', 'index')->defaults('_config', [
-                'view' => 'user.user.index',
-            ])->name('index');
+            // Change Password
+            Route::put('/changePassword', 'changePassword')->name('changePassword');
 
-            Route::get('/profile', 'showProfile')->defaults('_config', [
-                'view' => 'user.user.edit',
-            ])->name('showProfile');
+            // Update Profile
+            Route::put('/updateProfile', 'updateProfile')->name('updateProfile');
 
-            Route::get('/create', 'create')->defaults('_config', [
-                'view' => 'user.user.create',
-            ])->name('create');
+            // Show Profile
+            Route::get('/showProfile', 'showProfile')->name('showProfile');
+            // Update User Profile Image
+            Route::post('/updateProfileImage', 'updateProfileImage')->name('updateProfileImage');
 
-            Route::get('/{id}/edit', 'edit')->defaults('_config', [
-                'view' => 'user.user.edit',
-            ])->name('edit');
-
-            Route::post('/store', 'store')->defaults('_config', [
-                'redirect' => 'user.user-management.index',
-            ])
-                ->name('store');
-
-            Route::put('/{id}/update', 'update')
-                ->defaults('_config', [
-                    'redirect' => 'user.user-management.index',
-                ])
-                ->name('update');
-
-            Route::delete('/{id}/destroy', 'destroy')
-                ->defaults('_config', [
-                    'redirect' => 'user.user-management.index',
-                ])
-                ->name('destroy');
+            // Delete User Profile Image
+            Route::delete('/deleteProfileImage', 'deleteProfileImage')->name('deleteProfileImage');
         });
-        // Admin Management
+
+
 
         Route::get('/', function () {
             return redirect()->route('user.dashboard');
         });
-
-
-        // SETTINGS
-        Route::controller(SettingController::class)->name('settings.')
-            ->prefix('settings')->group(function () {
-                Route::get('', 'index')->defaults('_config', [
-                    'view' => 'user.settings.index',
-                ])->name('index');
-
-                Route::put('/update', 'update')
-                    ->defaults('_config', [
-                        'redirect' => 'user.settings.index',
-                    ])
-                    ->name('update');
-            });
-
-        // SETTINGS
-
-
     });
 });

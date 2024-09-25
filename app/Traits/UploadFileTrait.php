@@ -2,32 +2,28 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 trait UploadFileTrait
 {
-    public function uploadFile($file, string $directory, string $disk = "s3")
+    public function uploadFile($file, string $folder, string $disk = "public_uploads")
     {
-
         $fileName = $file->hashName();
-        $filePath = $directory . '/' . $fileName;
-        Storage::disk($disk)->put($filePath, file_get_contents($file));
+        $filePath = $folder . '/' . $fileName;
+        $file = $file->storeAs($folder, $fileName, $disk);
         return $filePath;
     }
 
-    public function getFileAttribute($filePath, $expirationDays = 6, $disk = 's3')
+    public function getFileAttribute($path)
     {
-        $temporaryUrl = Storage::disk($disk)->temporaryUrl(
-            $filePath,
-            now()->addDays($expirationDays)
-        );
-
-        return $temporaryUrl;
+        return ($path != null) ? asset('uploads/' . $path) : '';
     }
 
-    public function deleteFile($filePath, string $disk = "s3")
+    public function deleteFile($imageName, $directory)
     {
-
-        Storage::disk($disk)->delete($filePath);
+        if (File::exists(public_path('uploads/' . $directory . '/' . $imageName))) {
+            Storage::disk('public_uploads')->delete($directory . '/' . $imageName);
+        }
     }
 }

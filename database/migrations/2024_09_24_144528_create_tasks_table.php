@@ -20,6 +20,8 @@ return new class extends Migration
             $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
             $table->foreignId(column: 'user_id')->constrained()->onDelete('cascade');
             $table->foreignId(column: 'category_id')->constrained()->onDelete('cascade');
+            $table->timestamp('reminder_time');  // The time when the reminder should be triggered
+
             $table->timestamps();
         });
     }

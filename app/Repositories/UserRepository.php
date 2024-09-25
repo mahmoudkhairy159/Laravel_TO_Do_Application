@@ -3,83 +3,132 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Traits\UploadFileTrait;
+use Illuminate\Support\Facades\DB;
+use Prettus\Repository\Eloquent\BaseRepository;
 
-class UserRepository extends Repository
+class UserRepository extends BaseRepository
 {
-
-    protected $model;
-
-    public function __construct(User $model)
+    use UploadFileTrait;
+    public function model()
     {
-        $this->model = $model;
+        return User::class;
     }
-
-    public function getAll()
+    public function createOne(array $data)
     {
-        return $this->model->all();
-    }
 
-    public function paginated($limit = 10, $oderBy = "created_at", $sort = "desc")
-    {
-        return $this->model->where('blocked',0)->where('id','!=',auth()->id())
-            ->where(function ($query) {
-                $query->when(request()->search, function ($q, $searchKey) {
-
-                    $q->where(function ($query) use ($searchKey) {
-                        return $query->where('name', 'like', '%' . $searchKey . '%')
-                            ->orWhere('email', 'like', '%' . $searchKey . '%')
-                            ->orWhere('phone', 'like', '%' . $searchKey . '%');
-                    });
-                });
-            })
-            ->orderBy('created_at', $sort)
-            ->paginate($limit);
-    }
-
-    public function find(int $id)
-    {
-        return $this->model->find($id);
-    }
-
-    public function create(array $data)
-    {
-        if (request()->hasFile('image')) {
-            $data['image'] = $this->uploadImageAndResizeS3(request()->file('image'), 'users');
-        }
-        $data["password"] = Hash::make($data['password']);
-        $user=$this->model->create($data);
-        $user->addRole('user');
-        return $user;
-    }
-
-    public function update(array $data, int $id)
-    {
-        $user = $this->model->find($id);
-        if (request()->hasFile('image')) {
-            if ($user->image) {
-                $this->deleteFile($user->image);
+        try {
+            DB::beginTransaction();
+            if (request()->hasFile('image')) {
+                $data['image'] = $this->uploadFile(request()->file('image'), (string)User::FILES_DIRECTORY);
             }
-            $data['image'] = $this->uploadImageAndResizeS3(request()->file('image'), 'users');
+            $created = $this->model->create($data);
+            DB::commit();
+            return $created;
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            return false;
         }
-        if ($data['password']) {
-            $data["password"] = Hash::make($data['password']);
-        } else {
-            unset($data["password"]);
+    }
+    public function updateOne(array $data, int $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $user = $this->model->findOrFail($id);
+            if (request()->hasFile('image')) {
+                if ($user->image) {
+                    $this->deleteFile($user->image,User::FILES_DIRECTORY);
+                }
+                $userData['image'] = $this->uploadFile(request()->file('image'),(string)User::FILES_DIRECTORY);
+            }
+            $updated = $user->update($data);
+            DB::commit();
+
+            return  $updated;
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            return false;
         }
-        if(!$user->hasRole('user')) {
-            $user->addRole('user');
-        }
-        return $user->update($data);
     }
 
-    public function delete(int $id)
+    public function deleteOne(int $id)
     {
-        $user = $this->model->find($id);
-        if ($user->image) {
-            $this->deleteFile($user->image);
+        try {
+            DB::beginTransaction();
+
+            $user = $this->model->findOrFail($id);
+            if ($user->image) {
+                $this->deleteFile($user->image,User::FILES_DIRECTORY);
+            }
+            $deleted = $user->delete();
+            DB::commit();
+            return  $deleted;
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            return false;
         }
-        $data['blocked']=1;
-        return $user->update($data);
     }
+    public function updateProfileImage(int $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $user = $this->model->findOrFail($id);
+            if ($user->image) {
+                $this->deleteFile($user->image,User::FILES_DIRECTORY);
+            }
+            $data['image'] = $this->uploadFile(request()->file('image'), (string)User::FILES_DIRECTORY);
+
+            $user->update($data);
+
+            DB::commit();
+
+            return $user->refresh();
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            return false;
+        }
+    }
+    public function deleteProfileImage(int $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $user = $this->model->findOrFail($id);
+            if ($user->image) {
+                $this->deleteFile($user->image,User::FILES_DIRECTORY);
+            }
+            $data['image'] = null;
+            $user->update($data);
+            DB::commit();
+
+            return $user->refresh();
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            return false;
+        }
+    }
+    public function changePassword(string $newPassword, int $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $user = $this->model->findOrFail($id);
+            $user->password = $newPassword;
+            $user->save();
+            DB::commit();
+            return $user;
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return false;
+        }
+    }
+
+
 }

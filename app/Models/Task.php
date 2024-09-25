@@ -12,6 +12,7 @@ class Task extends Model
         'title',
         'description',
         'due_date',
+        'reminder_time',
         'priority',
         'status',
         'user_id',
@@ -28,4 +29,5 @@ class Task extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
 }
