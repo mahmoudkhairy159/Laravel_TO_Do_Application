@@ -10,7 +10,6 @@ class Category extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'description',
         'user_id',
     ];
 
@@ -23,6 +22,6 @@ class Category extends Model
     // Define relationship with Task model (if tasks belong to categories)
     public function tasks()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class, 'category_id');
     }
 }

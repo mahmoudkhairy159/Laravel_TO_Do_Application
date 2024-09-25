@@ -28,6 +28,8 @@ class UpdateTaskRequest extends FormRequest
             'priority' => ['required', 'in:low,medium,high'],
             'status' => ['required', 'in:pending,in_progress,completed'],
             'reminder_time' => ['nullable', 'date', 'after_or_equal:today'],
+            'category_id' => ['nullable', 'exists:categories,id'],
+
         ];
     }
     protected function prepareForValidation()

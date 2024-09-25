@@ -91,6 +91,17 @@
                 @enderror
             </div>
         </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label" for="reminder_time">Reminder Time</label>
+            <div class="col-sm-9">
+                <input type="text" name="reminder_time"  class="form-control  flatpickr-datetime flatpickr @error('reminder_time') is-invalid @enderror" placeholder="Select Reminder Time" value="{{ $item->reminder_time }}" />
+                @error('reminder_time')
+                <div class="text-danger">
+                    <strong>{{ $message }}</strong>
+                </div>
+                @enderror
+            </div>
+        </div>
 
         <div class="row mb-3">
             <label class="col-sm-3 col-form-label" for="priority">Priority <span class="text-danger">*</span></label>
@@ -125,16 +136,25 @@
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label" for="reminder_time">Reminder Time</label>
+            <label class="col-sm-3 col-form-label" for="category">Category<span class="text-danger">*</span></label>
             <div class="col-sm-9">
-                <input type="text" name="reminder_time"  class="form-control  flatpickr-datetime flatpickr @error('reminder_time') is-invalid @enderror" placeholder="Select Reminder Time" value="{{ $item->reminder_time }}" />
-                @error('reminder_time')
+                <select id="category_id" name="category_id"
+                    class="select2 form-select form-select-lg category_id @error('category_id') is-invalid @enderror"
+                    data-allow-clear="true">
+                    <option value="" selected>-- No Category --</option> <!-- Allow empty selection -->
+                    @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" @if ($item->category_id==$category->id) selected @endif>{{
+                        $category->name }}</option>
+                    @endforeach
+                </select>
+                @error('job_title')
                 <div class="text-danger">
                     <strong>{{ $message }}</strong>
                 </div>
                 @enderror
             </div>
         </div>
+
 
         <div class="pt-4">
             <div class="row justify-content-start">

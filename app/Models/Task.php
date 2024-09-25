@@ -32,6 +32,6 @@ class Task extends Model
     // Define relationship with Category model
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

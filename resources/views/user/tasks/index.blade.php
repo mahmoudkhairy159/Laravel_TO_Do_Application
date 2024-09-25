@@ -1,3 +1,4 @@
+
 @extends('user.layouts.layoutMaster')
 
 @section('title', 'Task List - Page')
@@ -33,21 +34,23 @@
     </div>
 
     <div class="card">
-        <div class="card-header">
-            <h5>All Tasks</h5>
-            <div class="d-flex align-items-center justify-content-end">
-                <a href="{{ route('user.tasks.create') }}" class="btn btn-primary waves-effect waves-light mx-1">Create Task <i class="ti ti-plus me-0 ti-xs"></i></a>
-            </div>
-
-            <form action="">
-                <div class="row my-3">
-                    <div class="col-md-6 d-flex">
-                        <input type="text" value="{{ request('search') }}" name="search" id="search" class="form-control" placeholder="Search Tasks" />
-                        <button type="submit" class="btn btn-primary me-sm-2 me-1">Search</button>
-                    </div>
+        <div class="card">
+            <div class="card-header">
+                <h5>All Tasks</h5>
+                <div class="d-flex align-items-center justify-content-end">
+                    <a href="{{ route('user.tasks.create') }}" class="btn btn-primary waves-effect waves-light mx-1">Create Task <i class="ti ti-plus me-0 ti-xs"></i></a>
+                    <button class="btn btn-secondary waves-effect waves-light mx-1" data-bs-toggle="modal" data-bs-target="#createCategoryModal">Create New Category</button>
                 </div>
-            </form>
-        </div>
+
+                <form action="">
+                    <div class="row my-3">
+                        <div class="col-md-6 d-flex">
+                            <input type="text" value="{{ request('search') }}" name="search" id="search" class="form-control" placeholder="Search Tasks" />
+                            <button type="submit" class="btn btn-primary me-sm-2 me-1">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
         @if ($items->count() > 0)
             <div class="table-responsive text-nowrap">
@@ -60,7 +63,8 @@
                             <th>Due Date</th>
                             <th>Priority</th>
                             <th>Status</th>
-                            <th >Actions</th>
+                            <th>Change Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -72,15 +76,47 @@
                                 <td>{{ $item->due_date }}</td>
                                 <td>{{ $item->priority }}</td>
                                 <td>
-                                    @if ($item->status)
-                                        <span class="btn btn-icon-only btn-success text-white" title="Completed" data-bs-toggle="tooltip" data-bs-placement="top">
-                                            <i class="fas fa-check"></i>
-                                        </span>
+                                    @if ($item->status == 'completed')
+                                        <span class="badge bg-success">Completed</span>
+                                    @elseif($item->status == 'in_progress')
+                                        <span class="badge bg-warning">In Progress</span>
                                     @else
-                                        <span class="btn btn-icon-only btn-danger text-white" title="Pending" data-bs-toggle="tooltip" data-bs-placement="top">
-                                            <i class="fa-solid fa-x"></i>
-                                        </span>
+                                        <span class="badge bg-danger">Pending</span>
                                     @endif
+                                </td>
+                                <td>
+                                    <!-- Button to Open Modal -->
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#updateStatusModal{{ $item->id }}">
+                                        Change Status
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="updateStatusModal{{ $item->id }}" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="updateStatusModalLabel">Update Task Status</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ route('user.tasks.updateStatus', $item->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+
+                                                        <div class="mb-3">
+                                                            <label for="status" class="form-label">Status</label>
+                                                            <select class="form-select" id="status" name="status" required>
+                                                                <option value="pending" {{ $item->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                                <option value="in_progress" {{ $item->status == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                                                                <option value="completed" {{ $item->status == 'completed' ? 'selected' : '' }}>Completed</option>
+                                                            </select>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="btn-group text-start">
                                     <div class="row justify-content-start align-content-center ">
@@ -115,5 +151,29 @@
                 </div>
             </div>
         @endif
+    </div>
+     <!-- Create Category Modal -->
+     <div class="modal fade" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('user.categories.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createCategoryModalLabel">Create New Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Category Name</label>
+                            <input type="text" class="form-control" id="categoryName" name="name" placeholder="Enter category name" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection

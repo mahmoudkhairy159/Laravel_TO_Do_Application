@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null'); // Ensure this is nullable
+            $table->foreignId('category_id')->nullable()->constrained('categories', 'id')->onDelete('set null');
 
             $table->timestamp('reminder_time')->nullable(); // Make reminder_time nullable if needed
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Website\Task\StoreTaskRequest;
 use App\Http\Requests\Website\Task\UpdateTaskRequest;
 use App\Http\Requests\Website\Task\UpdateTaskStatusRequest;
+use App\Repositories\CategoryRepository;
 use App\Repositories\TaskRepository;
 
 class TaskController extends Controller
@@ -13,11 +14,14 @@ class TaskController extends Controller
 
     protected $_config;
     protected $taskRepository;
+    protected $categoryRepository;
 
-    public function __construct(TaskRepository $taskRepository)
+    public function __construct(TaskRepository $taskRepository,CategoryRepository $categoryRepository)
     {
         $this->_config = request('_config');
         $this->taskRepository = $taskRepository;
+        $this->categoryRepository = $categoryRepository;
+
         $this->middleware('auth');
     }
 
@@ -33,7 +37,9 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view($this->_config['view']);
+        $userId=auth()->id();
+        $categories = $this->categoryRepository->getByUserId($userId)->get();
+        return view($this->_config['view'],compact('categories'));
     }
 
     /**
@@ -60,11 +66,11 @@ class TaskController extends Controller
     public function show($id)
     {
         $userId = auth()->id();
-        $item = $this->taskRepository->getByUserId($userId)->find($id);
+        $item = $this->taskRepository->getByUserId($userId)->with('category')->find($id);
         if (!$item) {
             return abort(404);
         }
-        return view($this->_config['view'], compact('item'));
+        return view($this->_config['view'], ['item' => $item, 'category' => $item->category]);
     }
 
     /**
@@ -73,11 +79,12 @@ class TaskController extends Controller
     public function edit(string $id)
     {
         $userId = auth()->id();
+        $categories = $this->categoryRepository->getByUserId($userId)->get();
         $item = $this->taskRepository->getByUserId($userId)->find($id);
         if (!$item) {
             return abort(404);
         }
-        return view($this->_config['view'], compact('item'));
+        return view($this->_config['view'], ['item' => $item, 'categories' => $categories]);
     }
 
     /**

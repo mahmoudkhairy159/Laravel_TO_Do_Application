@@ -94,7 +94,20 @@
                     @enderror
                 </div>
             </div>
-
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label" for="reminder_time">Reminder Time</label>
+                <div class="col-sm-9">
+                    <div class="input-group input-group-merge">
+                        <input type="text" name="reminder_time" id="flatpickr-datetime" placeholder="MM/DD/YYYY"
+                            class="form-control flatpickr-datetime @error('reminder_time') is-invalid @enderror" />
+                    </div>
+                    @error('reminder_time')
+                        <div class="text-danger">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
+                </div>
+            </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label" for="priority">Priority <span class="text-danger">*</span></label>
                 <div class="col-sm-9">
@@ -130,20 +143,28 @@
                 </div>
             </div>
 
+
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label" for="reminder_time">Reminder Time</label>
+                <label class="col-sm-3 col-form-label" for="Category">Category<span class="text-danger">*</span></label>
                 <div class="col-sm-9">
-                    <div class="input-group input-group-merge">
-                        <input type="text" name="reminder_time" id="flatpickr-datetime" placeholder="MM/DD/YYYY"
-                            class="form-control flatpickr-datetime @error('reminder_time') is-invalid @enderror" />
-                    </div>
-                    @error('reminder_time')
+                    <select id="category_id" name="category_id"
+                        class="select2 form-select form-select-lg category_id @error('category_id') is-invalid @enderror"
+                        data-allow-clear="true">
+                        <option value="" selected>-- No Category --</option> <!-- Allow empty selection -->
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" @if (old('category_id') == $category->id) selected @endif>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
                         <div class="text-danger">
                             <strong>{{ $message }}</strong>
                         </div>
                     @enderror
                 </div>
             </div>
+
 
             <div class="pt-4">
                 <div class="row justify-content-start">

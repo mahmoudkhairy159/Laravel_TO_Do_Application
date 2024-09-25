@@ -37,7 +37,12 @@
                 <p class="form-control-plaintext">{{ \Carbon\Carbon::parse($item->due_date)->format('d M, Y') }}</p>
             </div>
         </div>
-
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Reminder Time:</label>
+            <div class="col-sm-9">
+                <p class="form-control-plaintext">{{ $item->reminder_time ? $item->reminder_time : 'N/A' }}</p>
+            </div>
+        </div>
         <div class="row mb-3">
             <label class="col-sm-3 col-form-label">Priority:</label>
             <div class="col-sm-9">
@@ -52,10 +57,11 @@
             </div>
         </div>
 
+
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Reminder Time:</label>
+            <label class="col-sm-3 col-form-label">Category:</label>
             <div class="col-sm-9">
-                <p class="form-control-plaintext">{{ $item->reminder_time ? $item->reminder_time : 'N/A' }}</p>
+                <p class="form-control-plaintext">{{ $category->name??'NA' }}</p>
             </div>
         </div>
     </div>

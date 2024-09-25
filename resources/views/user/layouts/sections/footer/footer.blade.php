@@ -7,7 +7,7 @@
           document.write(new Date().getFullYear())
 
         </script>
-        , made with ❤️  Wardlin
+        , made with ❤️  Mahmoud Khairy
       </div>
     </div>
   </div>

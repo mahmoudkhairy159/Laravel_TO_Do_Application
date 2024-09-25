@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Website\AuthController;
+use App\Http\Controllers\Website\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Website\UserController;
 use App\Http\Controllers\Website\SettingController;
@@ -98,6 +99,11 @@ Route::prefix('user')->name('user.')->group(function () {
                     'redirect' => 'user.tasks.index',
                 ])
                 ->name('update');
+                Route::put('/{id}/updateStatus', 'updateStatus')
+                ->defaults('_config', [
+                    'redirect' => 'user.tasks.index',
+                ])
+                ->name('updateStatus');
 
             Route::delete('/{id}/destroy', 'destroy')
                 ->defaults('_config', [
@@ -106,7 +112,43 @@ Route::prefix('user')->name('user.')->group(function () {
                 ->name('destroy');
         });
         // Tasks Management
+ // Categories Management
+ Route::controller(CategoryController::class)->name('categories.')->prefix('categories')->group(function () {
+    Route::get('', 'index')->defaults('_config', [
+        'view' => 'user.categories.index',
+    ])->name('index');
 
+    Route::get('/create', 'create')->defaults('_config', [
+        'view' => 'user.categories.create',
+    ])->name('create');
+
+    Route::get('/{id}', 'show')->defaults('_config', [
+        'view' => 'user.categories.show',
+    ])->name('show');
+
+
+    Route::get('/{id}/edit', 'edit')->defaults('_config', [
+        'view' => 'user.categories.edit',
+    ])->name('edit');
+
+    Route::post('/store', 'store')->defaults('_config', [
+        'redirect' => 'user.categories.index',
+    ])
+        ->name('store');
+
+    Route::put('/{id}/update', 'update')
+        ->defaults('_config', [
+            'redirect' => 'user.categories.index',
+        ])
+        ->name('update');
+
+    Route::delete('/{id}/destroy', 'destroy')
+        ->defaults('_config', [
+            'redirect' => 'user.categories.index',
+        ])
+        ->name('destroy');
+});
+// Categories Management
 
         Route::get('/', function () {
             return redirect()->route('user.dashboard');

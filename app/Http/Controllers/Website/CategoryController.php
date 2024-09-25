@@ -21,8 +21,9 @@ class CategoryController extends Controller
         $this->middleware('auth');
     }
 
-    public function getByUserId($userId)
+    public function index()
     {
+        $userId=auth()->id();
         $items = $this->categoryRepository->getByUserId($userId)->paginate();
         return view($this->_config['view'], compact('items'));
     }
@@ -42,6 +43,7 @@ class CategoryController extends Controller
     {
 
         $data = $request->validated();
+        $data['user_id']=auth()->id();
         $created =  $this->categoryRepository->create($data);
 
         if (!$created) {
@@ -49,7 +51,8 @@ class CategoryController extends Controller
             return redirect()->back();
         }
         $request->session()->put('success', 'Category Created SuccessFully');
-        return redirect()->route($this->_config['redirect']);
+        return redirect()->back();
+        // return redirect()->route($this->_config['redirect']);
     }
 
     /**
@@ -58,11 +61,11 @@ class CategoryController extends Controller
     public function show($id)
     {
         $userId = auth()->id();
-        $item = $this->categoryRepository->getByUserId($userId)->find($id);
+        $item = $this->categoryRepository->getByUserId($userId)->with('tasks')->find($id);
         if (!$item) {
             return abort(404);
         }
-        return view($this->_config['view'], compact('item'));
+        return view($this->_config['view'], ['item' => $item, 'tasks' => $item->tasks]);
     }
 
     /**
@@ -99,7 +102,7 @@ class CategoryController extends Controller
         return redirect()->route($this->_config['redirect']);
     }
 
-    
+
 
     /**
      * Remove the specified resource from storage.
