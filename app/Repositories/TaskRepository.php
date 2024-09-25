@@ -16,7 +16,11 @@ class TaskRepository extends BaseRepository
     /*****************************************Retrieving For Users **************************************/
     public function getByUserId(int $userId)
     {
-        return $this->model->where('user_id', $userId);
+        return $this->model->where('user_id', $userId)->filter(request()->all())->when(request()->categoryIds, function ($query, $categoryIds) {
+            $query->withWhereHas('category', function ($query) use ($categoryIds) {
+                $query->whereIn('id', $categoryIds);
+            });
+        });
     }
 
     /*****************************************End Retrieving For Users **************************************/

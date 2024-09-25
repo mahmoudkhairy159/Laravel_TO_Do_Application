@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
+
     protected $fillable = [
         'title',
         'description',

@@ -116,6 +116,8 @@ Route::prefix('user')->name('user.')->group(function () {
  Route::controller(CategoryController::class)->name('categories.')->prefix('categories')->group(function () {
     Route::get('', 'index')->defaults('_config', [
         'view' => 'user.categories.index',
+        'redirect' => 'user.categories.index',
+
     ])->name('index');
 
     Route::get('/create', 'create')->defaults('_config', [
@@ -124,6 +126,8 @@ Route::prefix('user')->name('user.')->group(function () {
 
     Route::get('/{id}', 'show')->defaults('_config', [
         'view' => 'user.categories.show',
+        'redirect' => 'user.categories.show',
+
     ])->name('show');
 
 

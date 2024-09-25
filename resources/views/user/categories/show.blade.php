@@ -40,6 +40,8 @@
                             <input type="text" value="{{ request('search') }}" name="search" id="search"
                                 class="form-control" placeholder="Search Tasks" />
                             <button type="submit" class="btn btn-primary me-sm-2 me-1">Search</button>
+                            <a href="{{ route('user.categories.show', ['id'=>$item->id,'clear_filters' => 1]) }}"class="btn btn-primary me-sm-2 me-1">Clear </a>
+
                         </div>
                     </div>
                 </form>

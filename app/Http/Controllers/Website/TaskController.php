@@ -29,7 +29,8 @@ class TaskController extends Controller
     {
         $userId=auth()->id();
         $items = $this->taskRepository->getByUserId($userId)->paginate();
-        return view($this->_config['view'], compact('items'));
+        $categories = $this->categoryRepository->getByUserId($userId)->get();
+        return view($this->_config['view'], compact('items','categories'));
     }
 
     /**

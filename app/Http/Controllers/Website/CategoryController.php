@@ -22,8 +22,10 @@ class CategoryController extends Controller
     }
 
     public function index()
-    {
-        $userId=auth()->id();
+    { if (request()->has('clear_filters')) {
+        return redirect()->route($this->_config['redirect']);
+    }
+        $userId = auth()->id();
         $items = $this->categoryRepository->getByUserId($userId)->paginate();
         return view($this->_config['view'], compact('items'));
     }
@@ -43,7 +45,7 @@ class CategoryController extends Controller
     {
 
         $data = $request->validated();
-        $data['user_id']=auth()->id();
+        $data['user_id'] = auth()->id();
         $created =  $this->categoryRepository->create($data);
 
         if (!$created) {
@@ -61,7 +63,14 @@ class CategoryController extends Controller
     public function show($id)
     {
         $userId = auth()->id();
-        $item = $this->categoryRepository->getByUserId($userId)->with('tasks')->find($id);
+        if (request()->has('clear_filters')) {
+            return redirect()->route($this->_config['redirect'],$id);
+        }
+        $item = $this->categoryRepository->where('user_id', $userId)
+            ->with(['tasks' => function ($query) {
+                $query->filter(request()->all());
+            }])
+            ->find($id);
         if (!$item) {
             return abort(404);
         }

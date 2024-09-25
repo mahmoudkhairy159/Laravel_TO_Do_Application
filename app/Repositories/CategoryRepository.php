@@ -14,7 +14,7 @@ class CategoryRepository extends BaseRepository
     /*****************************************Retrieving For Users **************************************/
     public function getByUserId(int $userId)
     {
-        return $this->model->where('user_id', $userId);
+        return $this->model->where('user_id', $userId)->filter(request()->all());
     }
 
     /*****************************************End Retrieving For Users **************************************/
