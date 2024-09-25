@@ -19,20 +19,20 @@
 @section('content')
     <div class="row justify-content-start  ">
 
-        <!-- Total Users-->
+        <!-- Total Tasks-->
         <div class="col-xl-3 col-md-4 col-6 mb-4 text-center ">
-            <a href="{{ route('user.user-management.index') }}">
+            <a href="{{ route('user.tasks.index') }}">
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="badge p-2 bg-label-info mb-2 rounded"><i class="tf-icons ti ti-typography ti-md"></i>
                         </div>
-                        <h5 class="card-title mb-1 pt-2">Total Users</h5>
-                        <p class="mb-2 mt-1">{{ number_format($statisticsCount['users_count']) }}</p>
+                        <h5 class="card-title mb-1 pt-2">Total Tasks</h5>
+                        <p class="mb-2 mt-1">{{ number_format($statisticsCount['tasks_count']) }}</p>
                     </div>
             </a>
         </div>
     </div>
-    <!-- Total Users-->
+    <!-- Total Tasks-->
 
     </div>
 

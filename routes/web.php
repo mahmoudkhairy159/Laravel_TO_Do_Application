@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Website\UserController;
 use App\Http\Controllers\Website\SettingController;
 use App\Http\Controllers\Website\DashboardController;
+use App\Http\Controllers\Website\TaskController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,7 +43,7 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::post('/login/checkRegister', 'checkRegister')->name('check_register');
         });
 
-    Route::group(['middleware' => ['auth', 'role:user']], function () {
+    Route::group(['middleware' => ['auth']], function () {
 
         // Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])
@@ -67,7 +69,42 @@ Route::prefix('user')->name('user.')->group(function () {
             // Delete User Profile Image
             Route::delete('/deleteProfileImage', 'deleteProfileImage')->name('deleteProfileImage');
         });
+        // Tasks Management
+        Route::controller(TaskController::class)->name('tasks.')->prefix('tasks')->group(function () {
+            Route::get('', 'index')->defaults('_config', [
+                'view' => 'user.tasks.index',
+            ])->name('index');
 
+            Route::get('/{id}}', 'show')->defaults('_config', [
+                'view' => 'user.tasks.show',
+            ])->name('show');
+
+            Route::get('/create', 'create')->defaults('_config', [
+                'view' => 'user.tasks.create',
+            ])->name('create');
+
+            Route::get('/{id}/edit', 'edit')->defaults('_config', [
+                'view' => 'user.tasks.edit',
+            ])->name('edit');
+
+            Route::post('/store', 'store')->defaults('_config', [
+                'redirect' => 'user.tasks.index',
+            ])
+                ->name('store');
+
+            Route::put('/{id}/update', 'update')
+                ->defaults('_config', [
+                    'redirect' => 'user.tasks.index',
+                ])
+                ->name('update');
+
+            Route::delete('/{id}/destroy', 'destroy')
+                ->defaults('_config', [
+                    'redirect' => 'user.tasks.index',
+                ])
+                ->name('destroy');
+        });
+        // Tasks Management
 
 
         Route::get('/', function () {

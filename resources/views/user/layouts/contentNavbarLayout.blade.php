@@ -4,7 +4,7 @@
 @php
 $configData = Helper::appClasses();
 @endphp
-@extends('userphp/layouts/commonMaster' )
+@extends('user/layouts/commonMaster' )
 
 @php
 /* Display elements */

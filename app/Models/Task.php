@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +19,11 @@ class Task extends Model
         'user_id',
         'category_id',
     ];
-
+    public function getDueDateAttribute($value)
+    {
+        // Convert the date from Y-m-d to m/d/Y
+        return $value ? Carbon::createFromFormat('Y-m-d', $value)->format('m/d/Y') : null;
+    }
     // Define relationship with User model
     public function user()
     {
@@ -29,5 +34,4 @@ class Task extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
 }

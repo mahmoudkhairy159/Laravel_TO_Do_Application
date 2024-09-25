@@ -27,8 +27,19 @@ class UpdateTaskRequest extends FormRequest
             'due_date' => ['nullable', 'date', 'after_or_equal:today'],
             'priority' => ['required', 'in:low,medium,high'],
             'status' => ['required', 'in:pending,in_progress,completed'],
-            'reminder_date' => ['nullable', 'date', 'after_or_equal:today'],
+            'reminder_time' => ['nullable', 'date', 'after_or_equal:today'],
         ];
+    }
+    protected function prepareForValidation()
+    {
+        if ($this->due_date) {
+            // Convert due_date to Y-m-d format if it's not null
+            $this->merge([
+                'due_date' => \Carbon\Carbon::createFromFormat('m/d/Y', $this->due_date)->format('Y-m-d')
+            ]);
+        }
+
+
     }
 
 

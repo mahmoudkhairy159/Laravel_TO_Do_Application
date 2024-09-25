@@ -4,8 +4,8 @@
 
 'use strict';
 
-(function() {
-    // Flat Picker
+(function () {
+    // Flat Pickerreminder_date
     // --------------------------------------------------------------------
     const flatpickrDate = $('.flatpickr-date'),
         flatpickrTime = $('.flatpickr-time'),
@@ -97,10 +97,11 @@
 })();
 
 // * Pickers with jQuery dependency (jquery)
-$(function() {
+$(function () {
     // Bootstrap Datepicker
     // --------------------------------------------------------------------
     var bsDatepickerBasic = $('#bs-datepicker-basic'),
+        bsDatepickerBasic1 = $('#bs-datepicker-basic1'),
         bsDatepickerFormat = $('#bs-datepicker-format'),
         bsDatepickerRange = $('#bs-datepicker-daterange'),
         bsDatepickerDisabledDays = $('#bs-datepicker-disabled-days'),
@@ -116,7 +117,13 @@ $(function() {
             orientation: isRtl ? 'auto right' : 'auto left'
         });
     }
-
+    // Basic1
+    if (bsDatepickerBasic1.length) {
+        bsDatepickerBasic1.datepicker({
+            todayHighlight: true,
+            orientation: isRtl ? 'auto right' : 'auto left'
+        });
+    }
     // Format
     if (bsDatepickerFormat.length) {
         bsDatepickerFormat.datepicker({
@@ -315,7 +322,7 @@ $(function() {
 
 // color picker (pickr)
 // --------------------------------------------------------------------
-(function() {
+(function () {
     const classicPicker = document.querySelector('#color-picker-classic'),
         monolithPicker = document.querySelector('#color-picker-monolith'),
         nanoPicker = document.querySelector('#color-picker-nano');

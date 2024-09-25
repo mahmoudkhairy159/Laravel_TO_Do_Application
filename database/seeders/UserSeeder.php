@@ -22,13 +22,10 @@ class UserSeeder extends Seeder
             'name' => 'user',
             'email' => 'user@gmail.com',
             'email_verified_at' => now(),
-            'phone' => '01117507344',
-            'job_title' => 'Backend Developer',
             'password' => Hash::make('12345678'), // You can set a default password here
             'remember_token' => Str::random(10),
         ];
         $user =   User::create($data);
-        $user->addRole('user');
 
 
     }

@@ -18,9 +18,10 @@ return new class extends Migration
             $table->date('due_date')->nullable();
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
-            $table->foreignId(column: 'user_id')->constrained()->onDelete('cascade');
-            $table->foreignId(column: 'category_id')->constrained()->onDelete('cascade');
-            $table->timestamp('reminder_time');  // The time when the reminder should be triggered
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null'); // Ensure this is nullable
+
+            $table->timestamp('reminder_time')->nullable(); // Make reminder_time nullable if needed
 
             $table->timestamps();
         });

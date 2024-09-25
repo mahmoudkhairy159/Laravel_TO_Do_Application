@@ -21,8 +21,9 @@ class TaskController extends Controller
         $this->middleware('auth');
     }
 
-    public function getByUserId($userId)
+    public function index()
     {
+        $userId=auth()->id();
         $items = $this->taskRepository->getByUserId($userId)->paginate();
         return view($this->_config['view'], compact('items'));
     }
@@ -42,6 +43,7 @@ class TaskController extends Controller
     {
 
         $data = $request->validated();
+        $data['user_id']=auth()->id();
         $created =  $this->taskRepository->create($data);
 
         if (!$created) {

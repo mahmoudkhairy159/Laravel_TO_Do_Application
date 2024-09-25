@@ -13,10 +13,17 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
+        // Check if the request expects a JSON response
         if (!$request->expectsJson()) {
-            if (Route::is('website.*')) {
-                return route('website.login');
+            // If the route is part of the website group, redirect to the website login page
+            if (Route::is('user.*')) {
+                return route('user.login');
             }
+
+            // Add additional fallback logic here if necessary
         }
+
+        // Return null if no condition is met
+        return null;
     }
 }

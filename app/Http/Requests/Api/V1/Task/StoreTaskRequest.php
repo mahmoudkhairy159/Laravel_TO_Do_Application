@@ -29,7 +29,7 @@ class StoreTaskRequest extends FormRequest
             'due_date' => ['nullable', 'date', 'after_or_equal:today'],
             'priority' => ['required', 'in:low,medium,high'],
             'status' => ['required', 'in:pending,in_progress,completed'],
-            'reminder_date' => ['nullable', 'date', 'after_or_equal:today'],
+            'reminder_time' => ['nullable', 'date', 'after_or_equal:today'],
 
         ];
     }

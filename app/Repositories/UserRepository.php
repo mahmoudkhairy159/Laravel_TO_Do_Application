@@ -83,11 +83,11 @@ class UserRepository extends BaseRepository
             }
             $data['image'] = $this->uploadFile(request()->file('image'), (string)User::FILES_DIRECTORY);
 
-            $user->update($data);
+            $updated=$user->update($data);
 
             DB::commit();
 
-            return $user->refresh();
+            return $updated;
         } catch (\Throwable $th) {
 
             DB::rollBack();
@@ -104,10 +104,10 @@ class UserRepository extends BaseRepository
                 $this->deleteFile($user->image,User::FILES_DIRECTORY);
             }
             $data['image'] = null;
-            $user->update($data);
+            $deleted=$user->update($data);
             DB::commit();
 
-            return $user->refresh();
+            return  $deleted;
         } catch (\Throwable $th) {
 
             DB::rollBack();
