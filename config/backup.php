@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_NAME', 'ToDo'),
+        'name' => env('APP_NAME', 'To Do List'),
 
         'source' => [
 
@@ -211,7 +211,7 @@ return [
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'info@wardlion.com'),
-                'name' => env('MAIL_FROM_NAME', 'ToDo'),
+                'name' => env('MAIL_FROM_NAME', 'To Do List'),
             ],
         ],
 
@@ -251,7 +251,7 @@ return [
      */
     'monitor_backups' => [
         [
-            'name' => env('APP_NAME', 'ToDo'),
+            'name' => env('APP_NAME', 'To Do List'),
             'disks' => ['backups3'],
             'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,

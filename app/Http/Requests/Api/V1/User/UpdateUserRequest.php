@@ -25,10 +25,8 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => ['required', 'email', 'unique:users,email,' . request('id')],
+            'email' => ['required', 'email', 'unique:users,email,' . auth()->id()],
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:6000',
-            'password' => 'nullable|string|min:8|confirmed',
-
         ];
     }
  /**

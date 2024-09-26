@@ -72,7 +72,7 @@ $bootstrap-colors: (
 @include template-button-label-variant('.btn-label-white', $white, $body-color);
 @include template-button-outline-variant('.btn-outline-white', $white, $body-color);
 
-// ! ToDo: Custom colors (checkbox & radio)
+// ! To Do List: Custom colors (checkbox & radio)
 // *******************************************************************************
 
 $form-control-colors: (

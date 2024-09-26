@@ -69,7 +69,7 @@
   @include fullcalendar-theme($background, $color);
   @include sweetalert2-dark-theme($background, $color);
   @include colorPicker-theme($background);
-  @include icon-theme($background); // ToDo: placement of mixin
+  @include icon-theme($background); // To Do List: placement of mixin
   @include tour-theme($background);
   @include bs-stepper-theme($background);
 }

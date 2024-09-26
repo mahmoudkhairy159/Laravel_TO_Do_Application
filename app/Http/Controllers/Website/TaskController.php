@@ -114,7 +114,7 @@ class TaskController extends Controller
     public function updateStatus(UpdateTaskStatusRequest $request, string $id)
     {
         $userId = auth()->id();
-        $item = $this->taskRepository->getByUserId($userId)->find($id);
+        $item = $this->taskRepository->where('user_id',$userId)->find($id);
         if (!$item) {
             return abort(404);
         }

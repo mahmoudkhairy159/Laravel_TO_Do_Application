@@ -3,7 +3,7 @@
 return [
     "creatorName" => "Pixinvent",
     "creatorUrl" => "https://pixinvent.com",
-    "templateName" => "ToDo",
+    "templateName" => "To Do List",
     "templateSuffix" => "Administrator",
     "templateVersion" => "1.0.0",
     "templateFree" => false,

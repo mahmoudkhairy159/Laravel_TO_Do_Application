@@ -41,7 +41,7 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/register', 'register')->defaults('_config', [
                 'view' => 'user.auth.register',
             ])->name('register');
-            Route::post('/login/checkRegister', 'checkRegister')->name('check_register');
+            Route::post('/register/checkRegister', 'checkRegister')->name('check_register');
         });
 
     Route::group(['middleware' => ['auth']], function () {
@@ -57,18 +57,29 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::post('/logout', 'logout')->name('logout');
 
             // Change Password
-            Route::put('/changePassword', 'changePassword')->name('changePassword');
+            Route::put('/changePassword', 'changePassword')->defaults('_config', [
+                'redirect' => 'user.showProfile',
+            ])->name('changePassword');
 
             // Update Profile
-            Route::put('/updateProfile', 'updateProfile')->name('updateProfile');
+            Route::put('/updateProfile', 'updateProfile')->defaults('_config', [
+                'redirect' => 'user.showProfile',
+            ])->name('updateProfile');
 
             // Show Profile
-            Route::get('/showProfile', 'showProfile')->name('showProfile');
+            Route::get('/showProfile', 'showProfile')
+                ->defaults('_config', [
+                    'view' => 'user.user.show',
+                ])->name('showProfile');
             // Update User Profile Image
-            Route::post('/updateProfileImage', 'updateProfileImage')->name('updateProfileImage');
+            Route::post('/updateProfileImage', 'updateProfileImage')->defaults('_config', [
+                'redirect' => 'user.showProfile',
+            ])->name('updateProfileImage');
 
             // Delete User Profile Image
-            Route::delete('/deleteProfileImage', 'deleteProfileImage')->name('deleteProfileImage');
+            Route::delete('/deleteProfileImage', 'deleteProfileImage')->defaults('_config', [
+                'redirect' => 'user.showProfile',
+            ])->name('deleteProfileImage');
         });
         // Tasks Management
         Route::controller(TaskController::class)->name('tasks.')->prefix('tasks')->group(function () {
@@ -99,7 +110,7 @@ Route::prefix('user')->name('user.')->group(function () {
                     'redirect' => 'user.tasks.index',
                 ])
                 ->name('update');
-                Route::put('/{id}/updateStatus', 'updateStatus')
+            Route::put('/{id}/updateStatus', 'updateStatus')
                 ->defaults('_config', [
                     'redirect' => 'user.tasks.index',
                 ])
@@ -112,47 +123,47 @@ Route::prefix('user')->name('user.')->group(function () {
                 ->name('destroy');
         });
         // Tasks Management
- // Categories Management
- Route::controller(CategoryController::class)->name('categories.')->prefix('categories')->group(function () {
-    Route::get('', 'index')->defaults('_config', [
-        'view' => 'user.categories.index',
-        'redirect' => 'user.categories.index',
+        // Categories Management
+        Route::controller(CategoryController::class)->name('categories.')->prefix('categories')->group(function () {
+            Route::get('', 'index')->defaults('_config', [
+                'view' => 'user.categories.index',
+                'redirect' => 'user.categories.index',
 
-    ])->name('index');
+            ])->name('index');
 
-    Route::get('/create', 'create')->defaults('_config', [
-        'view' => 'user.categories.create',
-    ])->name('create');
+            Route::get('/create', 'create')->defaults('_config', [
+                'view' => 'user.categories.create',
+            ])->name('create');
 
-    Route::get('/{id}', 'show')->defaults('_config', [
-        'view' => 'user.categories.show',
-        'redirect' => 'user.categories.show',
+            Route::get('/{id}', 'show')->defaults('_config', [
+                'view' => 'user.categories.show',
+                'redirect' => 'user.categories.show',
 
-    ])->name('show');
+            ])->name('show');
 
 
-    Route::get('/{id}/edit', 'edit')->defaults('_config', [
-        'view' => 'user.categories.edit',
-    ])->name('edit');
+            Route::get('/{id}/edit', 'edit')->defaults('_config', [
+                'view' => 'user.categories.edit',
+            ])->name('edit');
 
-    Route::post('/store', 'store')->defaults('_config', [
-        'redirect' => 'user.categories.index',
-    ])
-        ->name('store');
+            Route::post('/store', 'store')->defaults('_config', [
+                'redirect' => 'user.categories.index',
+            ])
+                ->name('store');
 
-    Route::put('/{id}/update', 'update')
-        ->defaults('_config', [
-            'redirect' => 'user.categories.index',
-        ])
-        ->name('update');
+            Route::put('/{id}/update', 'update')
+                ->defaults('_config', [
+                    'redirect' => 'user.categories.index',
+                ])
+                ->name('update');
 
-    Route::delete('/{id}/destroy', 'destroy')
-        ->defaults('_config', [
-            'redirect' => 'user.categories.index',
-        ])
-        ->name('destroy');
-});
-// Categories Management
+            Route::delete('/{id}/destroy', 'destroy')
+                ->defaults('_config', [
+                    'redirect' => 'user.categories.index',
+                ])
+                ->name('destroy');
+        });
+        // Categories Management
 
         Route::get('/', function () {
             return redirect()->route('user.dashboard');

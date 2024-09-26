@@ -67,7 +67,7 @@
                                     <tr>
                                         <td>{{ $task->id }}</td>
                                         <td>{{ $task->title }}</td>
-                                        <td>{{ $task->description }}</td>
+                                        <td>{{ Illuminate\Support\Str::limit($task->description, 50) }}</td>
                                         <td>{{ $task->due_date }}</td>
                                         <td>{{ $task->priority }}</td>
                                         <td>{{ $task->status ? 'Completed' : 'Pending' }}</td>

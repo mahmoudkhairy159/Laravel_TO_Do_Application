@@ -12,6 +12,7 @@ use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -92,7 +93,7 @@ class AuthController extends Controller
         $data = $request->validated();
         $updated = $this->userRepository->changePassword($data['new_password'], $user->id);
         if ($updated) {
-            return redirect("/user")->with('success', "user is updated successfully");
+            return redirect()->route($this->_config['redirect'])->with('success', "user is updated successfully");
         } {
             $request->session()->put('error', 'Something Went Wrong');
             return redirect()->back();
@@ -101,10 +102,20 @@ class AuthController extends Controller
     // Show user profile
     public function showProfile()
     {
-        $item = Auth::user();
+        $userId = Auth::id();
+        $item = $this->userRepository->withCount(['tasks', 'categories'])->where('id', $userId)->first();
+
+        // Get the count of tasks grouped by status
+        $taskCounts = DB::table('tasks')
+            ->select('status', DB::raw('count(*) as count'))
+            ->where('user_id', $userId)
+            ->groupBy('status')
+            ->pluck('count', 'status')
+            ->toArray();
+
         $pageConfigs = ['myLayout' => 'default', 'myRTLSupport' => false];
 
-        return view($this->_config['view'], ['item' => $item, 'pageConfigs' => $pageConfigs]);
+        return view($this->_config['view'], ['item' => $item, 'taskCounts' => $taskCounts, 'pageConfigs' => $pageConfigs]);
     }
 
     // Update user profile
@@ -116,7 +127,7 @@ class AuthController extends Controller
         $updated = $this->userRepository->updateOne($data, $userId);
 
         if ($updated) {
-            return redirect("/user")->with('success', "Profile updated successfully");
+            return redirect()->route($this->_config['redirect'])->with('success', "Profile updated successfully");
         } else {
             $request->session()->put('error', 'Something went wrong');
             return redirect()->back();
@@ -131,21 +142,23 @@ class AuthController extends Controller
         $updated = $this->userRepository->updateProfileImage($userId);
 
         if ($updated) {
-            return redirect("/user")->with('success', 'Profile image updated successfully');
+            return redirect()->route($this->_config['redirect'])->with('success', 'Profile image updated successfully');
         } else {
             $request->session()->put('error', 'Something went wrong');
-            return redirect()->back();        }
+            return redirect()->back();
+        }
     }
 
     // Delete User Profile Image
-    public function deleteUserProfileImage()
+    public function deleteProfileImage()
     {
         $userId = Auth::id();
-        $updated = $this->userRepository->updateProfileImage($userId);
-        if ($updated) {
-            return redirect("/user")->with('success', 'Profile image deleted successfully');
+        $deleted = $this->userRepository->deleteProfileImage($userId);
+        if ($deleted) {
+            return redirect()->route($this->_config['redirect'])->with('success', 'Profile image deleted successfully');
         } {
             session()->put('error', 'Something went wrong');
-            return redirect()->back();        }
+            return redirect()->back();
+        }
     }
 }

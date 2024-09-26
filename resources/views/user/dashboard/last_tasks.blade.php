@@ -1,46 +1,4 @@
-@extends('user.layouts.layoutMaster')
-
-@section('title', 'Task List - Page')
-
-@section('vendor-style')
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/libs/typeahead-js/typeahead.css') }}" />
-@endsection
-
-<!-- Page -->
-@section('page-style')
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/css/pages/page-profile.css') }}" />
-@endsection
-
-
-@section('vendor-script')
-    <script src="{{ asset('assets/admin/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
-    <script src="{{ asset('assets/admin/vendor/libs/typeahead-js/typeahead.js') }}"></script>
-    <script src="{{ asset('assets/admin/vendor/libs/bloodhound/bloodhound.js') }}"></script>
-@endsection
-
-@section('page-script')
-    <script src="{{ asset('assets/admin/js/pages-profile.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/forms-selects.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/forms-typeahead.js') }}"></script>
-@endsection
-
-@section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
-        <div class="d-block mb-4 mb-md-0">
-            <nav aria-label="breadcrumb" class="d-md-inline-block">
-                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('user.dashboard') }}">
-                            <span class="menu-icon tf-icons ti ti-smart-home"></span>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Task Management</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-
+<div class="col-lg-12 mb-4 mb-lg-0">
     <div class="card">
         <div class="card">
             <div class="card-header">
@@ -58,8 +16,8 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingFilters">
                             <button class="accordion-button collapsed fw-bold fs-4 py-3 px-5 text-white bg-primary"
-                                type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters"
-                                aria-expanded="false" aria-controls="collapseFilters">
+                                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters"
+                                    aria-expanded="false" aria-controls="collapseFilters">
                                 🔍 Task Filters
                             </button>
                         </h2>
@@ -172,7 +130,7 @@
                             @foreach ($items as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td>{{ $item->title }}</td>
+                                    <td>{{ Illuminate\Support\Str::limit($item->title, 50) }}</td>
                                     <td>{{ Illuminate\Support\Str::limit($item->description, 50) }}</td>
                                     <td>{{ $item->due_date }}</td>
                                     <td>{{ $item->priority }}</td>
@@ -300,4 +258,4 @@
             </div>
         </div>
     </div>
-@endsection
+</div>

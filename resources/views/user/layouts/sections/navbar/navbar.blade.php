@@ -202,7 +202,7 @@ $navbarDetached = ($navbarDetached ?? '');
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
                                                 <div class="avatar">
-                                                    <img src="{{ asset('assets/admin/img/avatars/1.png') }}" alt
+                                                    <img src="{{ asset('assets/admin/img/avatars/default.png') }}" alt
                                                         class="h-auto rounded-circle">
                                                 </div>
                                             </div>
@@ -418,18 +418,18 @@ $navbarDetached = ($navbarDetached ?? '');
                         <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                             data-bs-toggle="dropdown">
                             <div class="avatar avatar-online">
-                                <img src="{{ Auth::user() ? Auth::user()->image_url : asset('assets/admin/img/avatars/1.png') }}"
+                                <img src="{{ Auth::user()->image_url ? Auth::user()->image_url : asset('assets/admin/img/avatars/default.png') }}"
                                     alt class="h-5 rounded-circle">
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item"
-                                    href="{{ Route::has('user.admin-management.showProfile') ? route('user.admin-management.showProfile') : url('admin/admin-management/profile') }}">
+                                    href="{{ Route::has('user.showProfile') ? route('user.showProfile') : url('useer/showProfile') }}">
                                     <div class="d-flex">
                                         <div class="flex-shrink-0 me-3">
                                             <div class="avatar avatar-online">
-                                                <img src="{{ Auth::user() ? Auth::user()->image_url : asset('assets/admin/img/avatars/1.png') }}"
+                                                <img src="{{ Auth::user()->image_url ? Auth::user()->image_url : asset('assets/admin/img/avatars/default.png') }}"
                                                     alt class="h-5 rounded-circle">
                                             </div>
                                         </div>

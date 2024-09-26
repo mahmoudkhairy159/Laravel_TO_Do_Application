@@ -41,7 +41,7 @@ class UserRepository extends BaseRepository
                 if ($user->image) {
                     $this->deleteFile($user->image,User::FILES_DIRECTORY);
                 }
-                $userData['image'] = $this->uploadFile(request()->file('image'),(string)User::FILES_DIRECTORY);
+                $data['image'] = $this->uploadFile(request()->file('image'),(string)User::FILES_DIRECTORY);
             }
             $updated = $user->update($data);
             DB::commit();
