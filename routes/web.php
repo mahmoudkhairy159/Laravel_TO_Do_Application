@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Website\UserController;
 use App\Http\Controllers\Website\SettingController;
 use App\Http\Controllers\Website\DashboardController;
+use App\Http\Controllers\Website\GoogleLoginController;
 use App\Http\Controllers\Website\TaskController;
 
 /*
@@ -18,7 +19,10 @@ use App\Http\Controllers\Website\TaskController;
 | contains the 'web' middleware group. Now create something great!
 |
  */
-
+Route::get('/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->defaults('_config', [
+    'redirect' => 'user.dashboard',
+])->name('google.callback');
 Route::get('/', [AuthController::class, 'login'])->defaults('_config', [
     'view' => 'user.auth.login',
 ])->name(name: 'index');

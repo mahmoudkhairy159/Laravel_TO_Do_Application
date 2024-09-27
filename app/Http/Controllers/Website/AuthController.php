@@ -65,7 +65,7 @@ class AuthController extends Controller
         if (auth()->attempt($credentials, $remember_token)) {
             $user = auth()->user();
             Auth::logoutOtherDevices($request->get('password'));
-            return redirect("/user")->with('success', trans("global.success_login"));
+            return redirect( "/user")->with('success', trans("global.success_login"));
         } else {
             $request->flash();
             return redirect()->route("user.login")->withInput()->withErrors([

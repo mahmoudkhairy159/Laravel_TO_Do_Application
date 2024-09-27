@@ -109,6 +109,18 @@
                         </a>
                     </p>
 
+                    <div class="divider my-4">
+                        <div class="divider-text">or</div>
+                    </div>
+
+                    <div class=" d-grid w-100  justify-content-center">
+                        <a href="{{ route('google.redirect') }}"
+                            class="btn btn-danger  align-items-center justify-content-center"
+                            style="gap: 10px; border-radius: 5px; padding: 10px 20px; font-weight: 500; font-size: 16px;">
+                            <i class="fab fa-google" style="font-size: 18px;"></i>
+                            Login with Google
+                        </a>
+                    </div>
                 </div>
             </div>
 
