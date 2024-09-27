@@ -20,6 +20,7 @@ class Task extends Model
         'status',
         'user_id',
         'category_id',
+        'reminder_sent_at'
     ];
     public function getDueDateAttribute($value)
     {

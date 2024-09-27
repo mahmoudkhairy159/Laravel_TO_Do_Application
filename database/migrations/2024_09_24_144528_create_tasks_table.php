@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('category_id')->nullable()->constrained('categories', 'id')->onDelete('set null');
 
             $table->timestamp('reminder_time')->nullable(); // Make reminder_time nullable if needed
-
+            $table->timestamp('reminder_sent_at')->nullable();
             $table->timestamps();
         });
     }

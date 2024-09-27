@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Website\Task\StoreTaskRequest;
 use App\Http\Requests\Website\Task\UpdateTaskRequest;
 use App\Http\Requests\Website\Task\UpdateTaskStatusRequest;
+use App\Models\Task;
 use App\Repositories\CategoryRepository;
 use App\Repositories\TaskRepository;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -27,6 +29,12 @@ class TaskController extends Controller
 
     public function index()
     {
+         // Fetch tasks with reminder time approaching in the next 5 minutes and with no reminders sent yet
+         $tasks = Task::where('reminder_time', '<=', now()->addMinutes(5))
+         ->where('reminder_time', '>=', now())
+         ->whereNull('reminder_sent_at') // Ensure reminders are not sent multiple times
+         ->get();
+dd($tasks,now()->addMinutes(5));
         $userId=auth()->id();
         $items = $this->taskRepository->getByUserId($userId)->paginate();
         $categories = $this->categoryRepository->getByUserId($userId)->get();

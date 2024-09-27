@@ -19,8 +19,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         $data = [
-            'name' => 'user',
-            'email' => 'user@gmail.com',
+            'name' => 'Mahmoud Khairy',
+            'email' => 'mahmoudkhairy159@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('12345678'), // You can set a default password here
             'remember_token' => Str::random(10),
