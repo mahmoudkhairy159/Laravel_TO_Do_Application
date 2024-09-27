@@ -1,4 +1,4 @@
-
+![task-categories](https://github.com/user-attachments/assets/9af5af2e-122b-4353-b453-fb5fb05afdc7)
 # Laravel ToDo Application
 
 ## Overview
@@ -88,9 +88,44 @@ php artisan migrate --seed
 ```bash
 php artisan serve
 ```
-
 ## Usage
 
 After completing the installation steps, you can access the application by navigating to `http://localhost:8000` in your web browser. Create an account, log in, and start managing your tasks effectively!
+## Ask a question.
+If you have any queries please contact at mahmoudkhairy159@gmail.com
 
+##Screenshot
+
+### Login
+![Login Screenshot](screenshots/login.jpg)
+### Sign-up
+![Sign-up Screenshot](screenshots/sign-up.jpg)
+### Login-with-google
+![login-with-google Screenshot](screenshots/login-with-google.jpg)
+### Dashboard
+![dashboard Screenshot](screenshots/dashboard.jpg)
+### task Filtration
+![task-filtration Screenshot](screenshots/task-filteration.jpg)
+### task-categories
+![task-categories Screenshot](screenshots/task-categories.jpg)
+### create-category
+![create-category Screenshot](screenshots/create-category.jpg)
+### create-task
+![create-task Screenshot](screenshots/create-task.jpg)
+### edit-task
+![edit-task Screenshot](screenshots/edit-task.jpg)
+### show-category-with-related-tasks
+![show-category-with-related-tasks Screenshot](screenshots/show-category-with-related-tasks.jpg)
+### profile-page
+![profile-page Screenshot](screenshots/profile-page.jpg)
+### edit-profile
+![edit-profile Screenshot](screenshots/edit-profile.jpg)
+### change-password
+![change-password Screenshot](screenshots/change-password.jpg)
+### edit-profile-image 
+![edit-profile-image  Screenshot](screenshots/edit-profile-image.jpg)
+### delete-profile-image
+![delete-profile-image Screenshot](screenshots/delete-profile-image.jpg)
+### Receive email notifications for upcoming tasks based on specified reminder times.
+![task-reminder-mail Screenshot](screenshots/task-reminder-mail.jpg)
 
