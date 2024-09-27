@@ -1,4 +1,3 @@
-![task-categories](https://github.com/user-attachments/assets/9af5af2e-122b-4353-b453-fb5fb05afdc7)
 # Laravel ToDo Application
 
 ## Overview
@@ -94,7 +93,7 @@ After completing the installation steps, you can access the application by navig
 ## Ask a question.
 If you have any queries please contact at mahmoudkhairy159@gmail.com
 
-##Screenshot
+## Screenshot
 
 ### Login
 ![Login Screenshot](screenshots/login.jpg)
@@ -104,27 +103,27 @@ If you have any queries please contact at mahmoudkhairy159@gmail.com
 ![login-with-google Screenshot](screenshots/login-with-google.jpg)
 ### Dashboard
 ![dashboard Screenshot](screenshots/dashboard.jpg)
-### task Filtration
+### Task Filtration
 ![task-filtration Screenshot](screenshots/task-filteration.jpg)
-### task-categories
+### Task-categories
 ![task-categories Screenshot](screenshots/task-categories.jpg)
-### create-category
+### Create-category
 ![create-category Screenshot](screenshots/create-category.jpg)
-### create-task
+### Create-task
 ![create-task Screenshot](screenshots/create-task.jpg)
-### edit-task
+### Edit-task
 ![edit-task Screenshot](screenshots/edit-task.jpg)
-### show-category-with-related-tasks
+### Show-category-with-related-tasks
 ![show-category-with-related-tasks Screenshot](screenshots/show-category-with-related-tasks.jpg)
-### profile-page
+### Profile-page
 ![profile-page Screenshot](screenshots/profile-page.jpg)
-### edit-profile
+### Edit-profile
 ![edit-profile Screenshot](screenshots/edit-profile.jpg)
-### change-password
+### Change-password
 ![change-password Screenshot](screenshots/change-password.jpg)
-### edit-profile-image 
+### Edit-profile-image 
 ![edit-profile-image  Screenshot](screenshots/edit-profile-image.jpg)
-### delete-profile-image
+### Delete-profile-image
 ![delete-profile-image Screenshot](screenshots/delete-profile-image.jpg)
 ### Receive email notifications for upcoming tasks based on specified reminder times.
 ![task-reminder-mail Screenshot](screenshots/task-reminder-mail.jpg)
