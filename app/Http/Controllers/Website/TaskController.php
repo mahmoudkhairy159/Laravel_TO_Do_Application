@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Website\Task\StoreTaskRequest;
 use App\Http\Requests\Website\Task\UpdateTaskRequest;
 use App\Http\Requests\Website\Task\UpdateTaskStatusRequest;
-use App\Models\Task;
 use App\Repositories\CategoryRepository;
 use App\Repositories\TaskRepository;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +28,6 @@ class TaskController extends Controller
 
     public function index()
     {
-        
         $userId=auth()->id();
         $items = $this->taskRepository->getByUserId($userId)->paginate();
         $categories = $this->categoryRepository->getByUserId($userId)->get();
