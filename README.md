@@ -122,7 +122,7 @@ If you have any queries please contact at mahmoudkhairy159@gmail.com
 ### Change-password
 ![change-password Screenshot](screenshots/change-password.jpg)
 ### Edit-profile-image 
-![edit-profile-image  Screenshot](screenshots/edit-profile-image.jpg)
+![edit-profile-image Screenshot](screenshots/edit-profile-image.jpg)
 ### Delete-profile-image
 ![delete-profile-image Screenshot](screenshots/delete-profile-image.jpg)
 ### Receive email notifications for upcoming tasks based on specified reminder times.
